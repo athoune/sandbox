@@ -3,11 +3,12 @@ require 'rubygems'
 require 'socket'
 require 'haml'
 
+socket_path = ARGV[0]
+
+File.unlink(socket_path) if File.exist?(socket_path)
 
 
-File.unlink('box.sock') if File.exist?('box.sock')
-
-UNIXServer.open("box.sock") do |serv|
+UNIXServer.open(socket_path) do |serv|
   loop do
     s = serv.accept
     again = true
