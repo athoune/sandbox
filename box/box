@@ -1,3 +1,3 @@
-#!/usr/bin/ruby -I vendor/bundle/ruby/1.9.1/gems/
+#!/usr/bin/ruby -I vendor/bundle/ruby/1.9.1/gems/ -C /opt/box
 
 require './box'
