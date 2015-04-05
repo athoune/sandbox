@@ -1,0 +1,3 @@
+#!/usr/bin/ruby -I vendor/bundle/ruby/1.9.1/gems/
+
+require './box'
