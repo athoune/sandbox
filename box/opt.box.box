@@ -9,8 +9,8 @@
   /etc/ld.so.cache r,
   /dev/urandom r,
   /etc/localtime r,
-  /usr/lib/ruby/1.9.1/*.rb r,
-  /usr/lib/ruby/1.9.1/**/*.rb r,
+  /usr/lib/ruby/@{RUBY_VERSION}/*.rb r,
+  /usr/lib/ruby/@{RUBY_VERSION}/**/*.rb r,
   /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb r,
 
   /opt/box/box Pixmr,
@@ -28,10 +28,10 @@
   /var/lib/gems/@{RUBY_VERSION}/specifications/*.gemspec r,
 
   /var/lib/gems/@{RUBY_VERSION}/gems/haml-[0-9.]*/lib/haml.rb r,
-  /var/lib/gems/@{RUBY_VERSION}/gems/haml-4.0.6/lib/haml/*.rb r,
+  /var/lib/gems/@{RUBY_VERSION}/gems/haml-[0-9.]*/lib/haml/*.rb r,
 
-  /var/lib/gems/1.9.1/gems/tilt-2.0.1/lib/tilt.rb r,
-  /var/lib/gems/1.9.1/gems/tilt-2.0.1/lib/tilt/*.rb r,
+  /var/lib/gems/@{RUBY_VERSION}/gems/tilt-[0-9.]*/lib/tilt.rb r,
+  /var/lib/gems/@{RUBY_VERSION}/gems/tilt-[0-9.]*/lib/tilt/*.rb r,
 
   /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/stringio.so mr,
   /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/strscan.so mr,
