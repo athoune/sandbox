@@ -5,8 +5,9 @@
 require 'socket'
 
 tpl = STDIN.read
+socket_path = ARGV[0]
 
-s = UNIXSocket.new("box/box.sock")
+s = UNIXSocket.new(socket_path)
 
 # FIXME handling UTF8
 s.puts [tpl.length].pack("L")
