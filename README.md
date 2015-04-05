@@ -12,6 +12,13 @@ The box
  * The UNIX socket is the only thing writable, the only way to communicate.
  * Cgroup will check CPU and RAM usage
 
+Auditing apparmor rules
+-----------------------
+
+    sudo apparmor_parser -Q --debug /etc/apparmor.d/opt.box.box
+
+Only two writable things, /run/box and /run/box/box.sock
+
 Licence
 -------
 
