@@ -9,7 +9,6 @@ socket_path = ARGV[0]
 
 File.unlink(socket_path) if File.exist?(socket_path)
 
-
 UNIXServer.open(socket_path) do |serv|
   loop do
     s = serv.accept
@@ -36,12 +35,11 @@ UNIXServer.open(socket_path) do |serv|
           s.puts [1, e.message.length].pack("CL")
           s.puts e.message
           s.close
-          again = false
+        else
+          # FIXME handling UTF8
+          s.puts [0, output.length].pack("CL")
+          s.puts output
         end
-        # FIXME handling UTF8
-        s.puts [0, output.length].pack("CL")
-        s.puts output
-        #s.close
         again = false
       end
     end
