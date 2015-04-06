@@ -10,22 +10,28 @@ socket_path = ARGV[0]
 
 s = UNIXSocket.new(socket_path)
 
-status = Timeout::timeout(5) do
-  # FIXME handling UTF8
-  s.puts [tpl.length].pack("L")
-  s.puts tpl
-  size = s.recv(4).unpack("L")[0]
-
-  if size
-    all_data = []
-    while true
-      blob = s.recv(size)
-      all_data << blob
-      size -= blob.length
-      break if size == 0
+begin
+  status = Timeout::timeout(5) do
+    # FIXME handling UTF8
+    s.puts [tpl.length].pack("L")
+    s.puts tpl
+    status, size = s.recv(5).unpack("CL")
+    raise 'wrong status' if status > 1
+    if size
+      all_data = []
+      while true
+        blob = s.recv(size)
+        all_data << blob
+        size -= blob.length
+        break if size == 0
+      end
+      response = all_data.join
+      raise response if status == 1
+      response
     end
-    all_data.join
   end
+rescue Timeout::Error
+  s.close
 end
 
 p status

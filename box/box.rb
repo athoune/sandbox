@@ -3,6 +3,8 @@ require 'rubygems'
 require 'socket'
 require 'haml'
 
+HUGE_SIZE = 2048
+
 socket_path = ARGV[0]
 
 File.unlink(socket_path) if File.exist?(socket_path)
@@ -17,8 +19,7 @@ UNIXServer.open(socket_path) do |serv|
       if size.nil?
         sleep 0.1
       else
-        # FIXME raise if size is too huge
-
+        raise 'The template is too large' if size > HUGE_SIZE
         all_data = []
         while true
           blob = s.recv(size)
@@ -27,13 +28,20 @@ UNIXServer.open(socket_path) do |serv|
           break if size == 0
         end
         template = all_data.join
+        begin
+          # FIXME handling UTF8
+          haml_engine = Haml::Engine.new(template)
+          output = haml_engine.render
+        rescue Exception => e
+          s.puts [1, e.message.length].pack("CL")
+          s.puts e.message
+          s.close
+          again = false
+        end
         # FIXME handling UTF8
-        haml_engine = Haml::Engine.new(template)
-        output = haml_engine.render
-        # FIXME handling UTF8
-        s.puts [output.length].pack("L")
+        s.puts [0, output.length].pack("CL")
         s.puts output
-        s.close
+        #s.close
         again = false
       end
     end
