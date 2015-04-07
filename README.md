@@ -22,16 +22,27 @@ The ruby code is neutral, but the security wrapping is specific for Ubuntu Trust
     make install
     make apparmor
 
-The code should not be run as root
+Add the box user
+
+    make user
+
+Create cgroup settings. The settings is 25% CPU share, 32Mo of RAM.
+
+    sudo apt-get install cgroup-bin
+    make limit
 
 Prepare the socket dir
 
     sudo mkdir /run/box
-    sudo chown ${USER} /run/box
+    sudo chown box /run/box
 
 Run the server
 
-    /opt/box/box /run/box/box.sock
+    sudo -u box cgexec -g memory,cpu:box /opt/box/box /run/box/box.sock
+
+OK, this is ugly : half Makefile, half sudo.
+
+The /run/box/box.sock file mode is painful : `box:nogroup` some `chmod` and `chgrp` are needed.
 
 In real life, the server is launched with bluepill, supervisor, upstart, systemd…
 
