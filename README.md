@@ -43,7 +43,7 @@ You can now use the tiny client
 Real world
 ----------
 
-There is no limit in paranoia.
+There is no limit to paranoia.
 
 Restart the daemon periodicaly.
 
