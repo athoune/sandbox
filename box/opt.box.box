@@ -6,6 +6,8 @@
 
 /opt/box/box {
 
+  signal (receive) peer=unconfined,
+
   /etc/ld.so.cache r,
   /dev/urandom r,
   /etc/localtime r,
