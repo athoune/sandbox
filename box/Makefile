@@ -30,3 +30,8 @@ limit: cgcreate
 	 sudo sh -c "echo 256 > /sys/fs/cgroup/cpu/box/cpu.shares"
 	# 32Mo
 	sudo sh -c "echo 32000000 > /sys/fs/cgroup/memory/box/memory.limit_in_bytes"
+
+upstart:
+	sudo cp ../upstart/sandbox.conf /etc/init/
+	sudo init-checkconf /etc/init/sandbox.conf
+	sudo initctl reload-configuration
