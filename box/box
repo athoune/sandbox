@@ -1,3 +1,47 @@
-#!/usr/bin/ruby -I vendor/bundle/ruby/1.9.1/gems/ -C /opt/box
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'socket'
+require 'haml'
 
-require './box'
+HUGE_SIZE = 2048
+
+socket_path = ARGV[0]
+
+File.unlink(socket_path) if File.exist?(socket_path)
+
+UNIXServer.open(socket_path) do |serv|
+  loop do
+    s = serv.accept
+    again = true
+    while again
+      size = s.recv(4).unpack("L")[0]
+      if size.nil?
+        sleep 0.1
+      else
+        raise 'The template is too large' if size > HUGE_SIZE
+        all_data = []
+        while true
+          blob = s.recv(size)
+          all_data << blob
+          size -= blob.length
+          break if size == 0
+        end
+        template = all_data.join
+        begin
+          # FIXME handling UTF8
+          haml_engine = Haml::Engine.new(template)
+          output = haml_engine.render
+        rescue Exception => e
+          s.puts [1, e.message.length].pack("CL")
+          s.puts e.message
+          s.close
+        else
+          # FIXME handling UTF8
+          s.puts [0, output.length].pack("CL")
+          s.puts output
+        end
+        again = false
+      end
+    end
+  end
+end

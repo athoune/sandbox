@@ -12,7 +12,7 @@ clean:
 
 install: gem /opt/box
 	cp -r vendor /opt/box/
-	cp box box.rb /opt/box
+	cp box /opt/box
 
 apparmor:
 	sudo cp opt.box.box /etc/apparmor.d/
