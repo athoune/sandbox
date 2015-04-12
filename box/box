@@ -5,7 +5,7 @@ require 'haml'
 
 HUGE_SIZE = 2048
 
-socket_path = ARGV[0]
+socket_path = ARGV[0] || '/run/box/box.sock'
 
 File.unlink(socket_path) if File.exist?(socket_path)
 
