@@ -10,7 +10,8 @@ The box
  * Apparmor bans network, removes capabilities
  * The disk is almost hidden, just ruby tool and code can be read.
  * The UNIX socket is the only thing writable, the only way to communicate.
- * Cgroup will check CPU and RAM usage
+ * Cgroup constrains CPU and RAM usage
+ * Eye supervizes the service
 
 Install and test it
 -------------------
@@ -18,7 +19,7 @@ Install and test it
 The ruby code is neutral, but the security wrapping is specific for Ubuntu Trusty.
 
     cd box
-    make
+    make deps
     make install
     make apparmor
 
@@ -28,23 +29,12 @@ Add the box user
 
 Create cgroup settings. The settings is 25% CPU share, 32Mo of RAM.
 
-    sudo apt-get install cgroup-bin
-    make limit
-
-Prepare the socket dir
-
-    sudo mkdir /run/box
-    sudo chown box /run/box
+    make cgroup
 
 Run the server
 
-    sudo -u box cgexec -g memory,cpu:box /opt/box/box /run/box/box.sock
-
-OK, this is ugly : half Makefile, half sudo.
-
-The /run/box/box.sock file mode is painful : `box:nogroup` some `chmod` and `chgrp` are needed.
-
-In real life, the server is launched with bluepill, supervisor, upstart, systemd…
+    make init.d
+    sudo service sandbox start
 
 You can now use the tiny client
 
