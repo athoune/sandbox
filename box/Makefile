@@ -35,3 +35,6 @@ upstart:
 	sudo cp ../upstart/sandbox.conf /etc/init/
 	sudo init-checkconf /etc/init/sandbox.conf
 	sudo initctl reload-configuration
+
+deps:
+	sudo apt-get install -y bundler cgroup-bin
