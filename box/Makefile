@@ -1,18 +1,18 @@
 gem:
-	bundle install --deployment
+	bundle install
+	bundle install --deployment --binstubs
 
 clean:
 	rm -rf .bundle
 	rm -rf vendor
-	bundle install
 
 /opt/box:
 	sudo mkdir -p /opt/box
 	sudo chown -R ${USER} /opt/box
 
 install: gem /opt/box
-	cp -r vendor /opt/box/
-	cp box /opt/box
+	cp -r vendor bin /opt/box/
+	cp box box.eye Gemfile Gemfile.lock /opt/box
 
 apparmor:
 	sudo cp opt.box.box /etc/apparmor.d/
