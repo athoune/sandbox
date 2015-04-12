@@ -41,10 +41,7 @@ SCRIPTNAME=/etc/init.d/$NAME
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
-#
-# Function that starts the daemon/service
-#
-do_start()
+do_pre_start()
 {
     mkdir -p /run/box
     chown box /run/box
@@ -60,6 +57,19 @@ do_start()
 
     mkdir -p /opt/box/.eye
     chown box /opt/box/.eye
+}
+
+do_post_start()
+{
+    sleep 3 # Yes, this is ugly, it should be a loop
+    cgclassify -g memory,cpu:box `cat /run/box/box.pid`
+}
+
+#
+# Function that starts the daemon/service
+#
+do_start()
+{
 	# Return
 	#   0 if daemon has been started
 	#   1 if daemon was already running
@@ -126,11 +136,13 @@ do_reload() {
 case "$1" in
   start)
 	[ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+    do_pre_start
 	do_start
 	case "$?" in
 		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
 		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	esac
+    do_post_start
 	;;
   stop)
 	[ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
@@ -167,6 +179,7 @@ case "$1" in
 			1) log_end_msg 1 ;; # Old process is still running
 			*) log_end_msg 1 ;; # Failed to start
 		esac
+        do_post_start
 		;;
 	  *)
 		# Failed to stop
