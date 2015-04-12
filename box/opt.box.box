@@ -31,10 +31,16 @@
   /usr/lib/ruby/@{RUBY_VERSION}/cgi/*.rb r,
   /usr/lib/ruby/@{RUBY_VERSION}/thread.rb r,
   /usr/lib/ruby/@{RUBY_VERSION}/socket.rb r,
+
   /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb r,
 
+  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/stringio.so mr,
+  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/strscan.so mr,
+  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/socket.so mr,
+  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/enc/trans/transdb.so mr,
+  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/enc/encdb.so mr,
+
   /opt/box/box Pixmr,
-  /opt/box/box.rb mr,
   /opt/box/vendor/**/*.rb mr,
 
   /usr/bin/ruby Pix,
@@ -42,6 +48,7 @@
 
   /usr/share/rubygems-integration/@{RUBY_VERSION}/specifications/ r,
   /usr/share/rubygems-integration/@{RUBY_VERSION}/specifications/*.gemspec r,
+
   /var/lib/gems/@{RUBY_VERSION}/specifications/ r,
   /var/lib/gems/@{RUBY_VERSION}/specifications/*.gemspec r,
 
@@ -51,11 +58,6 @@
   /var/lib/gems/@{RUBY_VERSION}/gems/tilt-[0-9.]*/lib/tilt.rb r,
   /var/lib/gems/@{RUBY_VERSION}/gems/tilt-[0-9.]*/lib/tilt/*.rb r,
 
-  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/stringio.so mr,
-  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/strscan.so mr,
-  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/socket.so mr,
-  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/enc/trans/transdb.so mr,
-  /usr/lib/ruby/@{RUBY_VERSION}/x86_64-linux/enc/encdb.so mr,
   /lib/x86_64-linux-gnu/libm-2.19.so mr,
   /lib/x86_64-linux-gnu/libcrypt-2.19.so mr,
   /lib/x86_64-linux-gnu/libdl-2.19.so mr,
