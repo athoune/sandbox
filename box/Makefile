@@ -36,5 +36,10 @@ upstart:
 	sudo init-checkconf /etc/init/sandbox.conf
 	sudo initctl reload-configuration
 
+init.d:
+	sudo cp ../init.d/sandbox /etc/init.d/
+	sudo chmod +x /etc/init.d/sandbox
+	sudo update-rc.d sandbox defaults
+
 deps:
 	sudo apt-get install -y bundler cgroup-bin
